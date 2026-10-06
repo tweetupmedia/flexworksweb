@@ -1,0 +1,6 @@
+{
+  "name": "Rise - Global Payroll & Contractor EOR Platform",
+  "description": "Compliant global hiring, onboarding, stablecoin and fiat payroll, contractor management, and comprehensive administrative oversight across 230+ countries.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

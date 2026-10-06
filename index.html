@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <script>
+      (function() {
+        try {
+          var origFetch = window.fetch;
+          var _currentFetch = origFetch ? function() {
+            return origFetch.apply(this, arguments);
+          } : null;
+
+          if (typeof Window !== 'undefined' && Window.prototype) {
+            try {
+              var pDesc = Object.getOwnPropertyDescriptor(Window.prototype, 'fetch');
+              if (pDesc && pDesc.get && !pDesc.set) {
+                Object.defineProperty(Window.prototype, 'fetch', {
+                  get: pDesc.get,
+                  set: function(v) {
+                    _currentFetch = v;
+                    try {
+                      Object.defineProperty(this, 'fetch', {
+                        value: v,
+                        writable: true,
+                        configurable: true,
+                        enumerable: true
+                      });
+                    } catch (e) {}
+                  },
+                  configurable: true,
+                  enumerable: true
+                });
+              }
+            } catch (e) {}
+          }
+
+          try {
+            Object.defineProperty(window, 'fetch', {
+              get: function() {
+                return _currentFetch || (origFetch ? origFetch.bind(window) : undefined);
+              },
+              set: function(newFetch) {
+                _currentFetch = newFetch;
+              },
+              configurable: true,
+              enumerable: true
+            });
+          } catch (e) {
+            try {
+              window.fetch = function() {
+                return (_currentFetch || origFetch).apply(this, arguments);
+              };
+            } catch (e2) {}
+          }
+        } catch (err) {
+          console.warn('Fetch setter patch failed:', err);
+        }
+      })();
+    </script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Flex - Global Lifecycle Intelligence & Hybrid Workforce Platform</title>
+    <meta name="description" content="Flex: One platform for the entire global workforce journey. Compliant global hiring, onboarding, payroll, statutory benefits, and ironclad labor compliance across 150+ countries." />
+    <meta property="og:title" content="Flex - Global Lifecycle Intelligence" />
+    <meta property="og:description" content="Flex: One platform for the entire global workforce journey. Compliant global hiring, onboarding, payroll, statutory benefits, and ironclad labor compliance across 150+ countries." />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,400&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-K53HG3GV');</script>
+    <!-- End Google Tag Manager -->
+  </head>
+  <body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-K53HG3GV"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
+
